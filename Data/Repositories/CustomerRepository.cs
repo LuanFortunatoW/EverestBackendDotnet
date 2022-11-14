@@ -47,7 +47,14 @@ namespace Data.Repositories
 
         public Customer GetById(long id)
         {
-            return _customers.FirstOrDefault(customer => customer.Id == id);
+            var result = _customers.FirstOrDefault(customer => customer.Id == id);
+
+            if (result is null)
+            {
+                throw new ArgumentException($"Customer with id {id} not found");
+            }
+
+            return result;
         }
 
         public bool Update(Customer updatedCustomer)

@@ -39,7 +39,7 @@ namespace API.Controllers
             try
             {
                 var result = _repository.GetById(id);
-                return result is null ? NotFound() : Ok(result);
+                return Ok(result);
             }
             catch (ArgumentException exception)
             {
@@ -69,7 +69,7 @@ namespace API.Controllers
             try
             {
                 var result = _repository.Delete(id);
-                return Ok(result);
+                return Ok();
             }
             catch (ArgumentException exception)
             {
@@ -84,7 +84,7 @@ namespace API.Controllers
             try
             {
                 var result = _repository.Update(customer);
-                return result ? Ok(result) : NotFound();
+                return result ? Ok() : NotFound();
             }
             catch (ArgumentException exception)
             {
