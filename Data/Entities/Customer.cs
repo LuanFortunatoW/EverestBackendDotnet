@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    internal class Costumer : BaseEntity
+    internal class Customer : BaseEntity
     {
-        public Costumer(string fullName, string email, string emailConfirmation, string cpf, string cellphone, DateTime dateOfBirth, bool emailSms, bool whatsapp, string country, string city, string postalCode)
+        public Customer(string fullName, string email, string emailConfirmation, string cpf, string cellphone, DateTime dateOfBirth, bool emailSms, bool whatsapp, string country, string city, string postalCode)
         {
             FullName = fullName;
             Email = email;
