@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Data.Entities;
-using Data.Repositories;
+﻿using Data.Entities;
 using Data.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace API.Controllers
 {
@@ -10,9 +9,9 @@ namespace API.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerRepository _repository;
+        private readonly ICustomerService _repository;
 
-        public CustomerController(ICustomerRepository repository)
+        public CustomerController(ICustomerService repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }

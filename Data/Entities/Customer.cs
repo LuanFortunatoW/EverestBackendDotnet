@@ -1,14 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Entities
 {
     public class Customer : BaseEntity
     {
-        public Customer(string fullName, string email, string emailConfirmation, string cpf, string cellphone, DateTime dateOfBirth, bool emailSms, bool whatsapp, string country, string city, string postalCode, string address, int number)
+        public Customer(
+            string fullName,
+            string email,
+            string emailConfirmation,
+            string cpf,
+            string cellphone,
+            DateTime dateOfBirth,
+            bool emailSms,
+            bool whatsapp,
+            string country,
+            string city,
+            string postalCode,
+            string address,
+            int number
+        )
         {
             FullName = fullName;
             Email = email;

@@ -3,13 +3,10 @@ using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Data.Repositories
 {
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerService : ICustomerService
     {
         private readonly List<Customer> _customers = new();
 
@@ -17,15 +14,12 @@ namespace Data.Repositories
         {
             bool emailAlreadyExists = _customers.Any(customer => customer.Email == createdCustomer.Email);
             if (emailAlreadyExists)
-            {
                 throw new ArgumentException("Email already exists");
-            }
 
             bool cpfAlreadyExists = _customers.Any(customer => customer.Cpf == createdCustomer.Cpf);
             if (cpfAlreadyExists)
-            {
                 throw new ArgumentException("Cpf already exists");
-            }
+            
 
             createdCustomer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1; 
 
@@ -50,9 +44,8 @@ namespace Data.Repositories
             var result = _customers.FirstOrDefault(customer => customer.Id == id);
 
             if (result is null)
-            {
                 throw new ArgumentException($"Customer with id {id} not found");
-            }
+            
 
             return result;
         }
@@ -61,19 +54,16 @@ namespace Data.Repositories
         {
             bool emailAlreadyExists = _customers.Any(customer => customer.Email == updatedCustomer.Email && customer.Id != updatedCustomer.Id);
             if (emailAlreadyExists)
-            {
                 throw new ArgumentException("Email already exists");
-            }
 
             bool cpfAlreadyExists = _customers.Any(customer => customer.Cpf == updatedCustomer.Cpf && customer.Id != updatedCustomer.Id);
             if (cpfAlreadyExists)
-            {
                 throw new ArgumentException("Cpf already exists");
-            }
 
             int index = _customers.FindIndex(customer => customer.Id == updatedCustomer.Id);
 
-            if (index == -1) return false;
+            if (index == -1) 
+                return false;
             
             updatedCustomer.Id = _customers[index].Id;
             _customers[index] =  updatedCustomer;

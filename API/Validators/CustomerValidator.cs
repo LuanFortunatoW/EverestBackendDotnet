@@ -1,10 +1,7 @@
 ﻿using Data.Entities;
 using FluentValidation;
+using FluentValidation.Validators;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Validators
 {
@@ -13,14 +10,14 @@ namespace Data.Validators
         public CustomerValidator()
         {
             RuleFor(customer => customer.FullName)
-                .NotNull()
+                .NotEmpty()
                 .MinimumLength(5);
 
             RuleFor(customer => customer.Email)
                 .NotEmpty()
                 .Equal(costumer => costumer.EmailConfirmation)
                 .WithMessage("Emails don't match")
-                .Matches(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")
+                .EmailAddress(EmailValidationMode.AspNetCoreCompatible)
                 .WithMessage("Email is not valid");
 
             RuleFor(customer => customer.Cpf)
@@ -29,41 +26,44 @@ namespace Data.Validators
                 .WithMessage("Cpf is not valid.");
 
             RuleFor(customer => customer.Cellphone)
-                .NotNull();
+                .NotEmpty()
+                .MinimumLength(8);
 
             RuleFor(customer => customer.DateOfBirth)
-                .NotNull()
-                .LessThan(DateTime.Now.Date)
+                .NotEmpty()
                 .WithMessage("Date of birth is not valid.");
 
+            RuleFor(customer => customer.DateOfBirth.AddYears(18))
+                .LessThan(DateTime.Now.Date)
+                .WithMessage("Age must be over 18.");
+
             RuleFor(customer => customer.EmailSms)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(customer => customer.Whatsapp)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(customer => customer.Country)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(customer => customer.City)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(customer => customer.PostalCode)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(customer => customer.Address)
-                .NotNull();
+                .NotEmpty()
+                .MinimumLength(4);
 
             RuleFor(customer => customer.Number)
-                .NotNull();
+                .NotEmpty();
         }
 
         public bool BeValidCpf(string cpf)
         {
             if (cpf.Length != 11)
-            {
                 return false;
-            }
 
             int[] multiplier1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplier2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
