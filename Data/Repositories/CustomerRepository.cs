@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Data.Repositories
 {
-    internal class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
-
         private readonly List<Customer> _customers = new();
 
         public void Create(Customer createdCustomer)
@@ -21,11 +21,13 @@ namespace Data.Repositories
                 throw new ArgumentException("Email already exists");
             }
 
-            bool cpfAlreadyExists =  _customers.Any(customer => customer.Cpf == createdCustomer.Cpf);
+            bool cpfAlreadyExists = _customers.Any(customer => customer.Cpf == createdCustomer.Cpf);
             if (cpfAlreadyExists)
             {
                 throw new ArgumentException("Cpf already exists");
             }
+
+            createdCustomer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1; 
 
             _customers.Add(createdCustomer);
         }
@@ -39,12 +41,13 @@ namespace Data.Repositories
 
         public List<Customer> GetAll()
         {
+
             return _customers;
         }
 
         public Customer GetById(long id)
         {
-           return _customers.First(customer => customer.Id == id);
+            return _customers.FirstOrDefault(customer => customer.Id == id);
         }
 
         public bool Update(Customer updatedCustomer)
@@ -61,11 +64,12 @@ namespace Data.Repositories
                 throw new ArgumentException("Cpf already exists");
             }
 
-            int index = _customers.IndexOf(updatedCustomer);
+            int index = _customers.FindIndex(customer => customer.Id == updatedCustomer.Id);
 
-            if(index == -1) return false;
+            if (index == -1) return false;
             
-            _customers.Insert(index, updatedCustomer);
+            updatedCustomer.Id = _customers[index].Id;
+            _customers[index] =  updatedCustomer;
             return true;
         }
     }

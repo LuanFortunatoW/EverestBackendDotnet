@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces
 {
-    internal interface ICustomerRepository
+    public interface ICustomerRepository
     {
         void Create(Customer customer);
         bool Update(Customer customer);
-        bool Delete(long  id);
+        bool Delete(long id);
         List<Customer> GetAll();
         Customer GetById(long id);
     }

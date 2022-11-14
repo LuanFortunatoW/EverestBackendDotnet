@@ -1,3 +1,11 @@
+using Data.Validators;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Data.Entities;
+using Data.Interfaces;
+using Data.Repositories;
+using Microsoft.AspNetCore.Builder;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +14,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<Customer>, CustomerValidator>();
 
 var app = builder.Build();
 

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace Data.Entities
 {
-    internal class Customer : BaseEntity
+    public class Customer : BaseEntity
     {
-        public Customer(string fullName, string email, string emailConfirmation, string cpf, string cellphone, DateTime dateOfBirth, bool emailSms, bool whatsapp, string country, string city, string postalCode)
+        public Customer(string fullName, string email, string emailConfirmation, string cpf, string cellphone, DateTime dateOfBirth, bool emailSms, bool whatsapp, string country, string city, string postalCode, string address, int number)
         {
             FullName = fullName;
             Email = email;
             EmailConfirmation = emailConfirmation;
-            Cpf = cpf;
-            formatCpf();
+            Cpf = formatCpf(cpf);
             Cellphone = cellphone;
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
@@ -22,6 +21,8 @@ namespace Data.Entities
             Country = country;
             City = city;
             PostalCode = postalCode;
+            Address = address;
+            Number = number;
         }
 
         public string FullName { get; set; }
@@ -35,10 +36,12 @@ namespace Data.Entities
         public string Country { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+        public string Address { get; set; }
+        public int Number { get; set; }
 
-        public void formatCpf()
+        public string formatCpf(string cpf)
         {
-             Cpf.Trim().Replace(".", "").Replace(",", "").Replace("-", "");
+            return cpf.Trim().Replace(".", "").Replace(",", "").Replace("-", "");
         }
     }
 }
