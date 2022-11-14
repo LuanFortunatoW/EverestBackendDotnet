@@ -14,6 +14,7 @@ namespace Data.Entities
             Email = email;
             EmailConfirmation = emailConfirmation;
             Cpf = cpf;
+            formatCpf();
             Cellphone = cellphone;
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
@@ -34,6 +35,11 @@ namespace Data.Entities
         public string Country { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+
+        public void formatCpf()
+        {
+             Cpf.Trim().Replace(".", "").Replace(",", "").Replace("-", "");
+        }
     }
 }
 
