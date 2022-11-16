@@ -3,6 +3,7 @@ using DomainServices.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace DomainServices.Services
 {
     public class CustomerService : ICustomerService
@@ -19,7 +20,6 @@ namespace DomainServices.Services
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-
             createdCustomer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1;
 
             _customers.Add(createdCustomer);
@@ -34,7 +34,6 @@ namespace DomainServices.Services
 
         public List<Customer> GetAll()
         {
-
             return _customers;
         }
 
@@ -45,13 +44,14 @@ namespace DomainServices.Services
             if (result is null)
                 throw new ArgumentException($"Customer with id {id} not found");
 
-
             return result;
         }
 
         public bool Update(Customer updatedCustomer)
+
         {
             bool emailAlreadyExists = _customers.Any(customer => customer.Email == updatedCustomer.Email && customer.Id != updatedCustomer.Id);
+
             if (emailAlreadyExists)
                 throw new ArgumentException("Email already exists");
 
@@ -60,7 +60,6 @@ namespace DomainServices.Services
                 throw new ArgumentException("Cpf already exists");
 
             int index = _customers.FindIndex(customer => customer.Id == updatedCustomer.Id);
-
             if (index == -1)
                 return false;
 
@@ -70,3 +69,5 @@ namespace DomainServices.Services
         }
     }
 }
+
+

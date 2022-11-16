@@ -1,5 +1,5 @@
-﻿using Data.Entities;
-using Data.Interfaces;
+﻿using DomainModels;
+using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

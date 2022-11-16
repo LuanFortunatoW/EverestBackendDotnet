@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Data.Entities
+namespace DomainModels
 {
-    public class Customer : BaseEntity
+    public class Customer : BaseModel
     {
         public Customer(
             string fullName,

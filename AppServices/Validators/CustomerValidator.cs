@@ -1,11 +1,11 @@
-﻿using Data.Entities;
+﻿using DomainModels;
 using FluentValidation;
 using FluentValidation.Validators;
 using System;
 
-namespace Data.Validators
+namespace AppServices.Validators
 {
-    internal class CustomerValidator : AbstractValidator<Customer>
+    public class CustomerValidator : AbstractValidator<Customer>
     {
         public CustomerValidator()
         {
