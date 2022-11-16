@@ -38,10 +38,10 @@ namespace Data.Validators
                 .WithMessage("Age must be over 18.");
 
             RuleFor(customer => customer.EmailSms)
-                .NotEmpty();
+                .NotNull();
 
             RuleFor(customer => customer.Whatsapp)
-                .NotEmpty();
+                .NotNull();
 
             RuleFor(customer => customer.Country)
                 .NotEmpty();

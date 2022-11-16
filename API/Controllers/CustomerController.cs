@@ -9,11 +9,11 @@ namespace API.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerService _repository;
+        private readonly ICustomerService _customerService;
 
-        public CustomerController(ICustomerService repository)
+        public CustomerController(ICustomerService customerService)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace API.Controllers
         {
             try
             {
-                var result = _repository.GetAll();
+                var result = _customerService.GetAll();
                 return Ok(result);
             }
             catch (ArgumentException exception)
@@ -29,7 +29,6 @@ namespace API.Controllers
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return BadRequest(message);
             }
-
         }
 
         [HttpGet("{id}")]
@@ -37,7 +36,7 @@ namespace API.Controllers
         {
             try
             {
-                var result = _repository.GetById(id);
+                var result = _customerService.GetById(id);
                 return Ok(result);
             }
             catch (ArgumentException exception)
@@ -52,7 +51,7 @@ namespace API.Controllers
         {
             try
             {
-                _repository.Create(customer);
+                _customerService.Create(customer);
                 return Created("", customer.Id);
             }
             catch (ArgumentException exception)
@@ -67,8 +66,8 @@ namespace API.Controllers
         {
             try
             {
-                var result = _repository.Delete(id);
-                return Ok();
+                _customerService.Delete(id);
+                return Ok("Customer deleted");
             }
             catch (ArgumentException exception)
             {
@@ -82,16 +81,14 @@ namespace API.Controllers
         {
             try
             {
-                var result = _repository.Update(customer);
-                return result ? Ok() : NotFound();
+                _customerService.Update(customer);
+                return Ok("Customer updated");
             }
             catch (ArgumentException exception)
             {
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return NotFound(message);
             }
-
         }
     }
-
 }
