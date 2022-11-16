@@ -10,9 +10,6 @@ namespace API.Controllers
     [ApiController]
     public class CustomerController : BaseController<CustomerService, Customer>
     {
-        public CustomerController(CustomerService service) : base(service)
-        {
-        }
+        public CustomerController(CustomerService service) : base(service) { }
     }
-
 }
