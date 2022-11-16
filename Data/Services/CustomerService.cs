@@ -60,7 +60,6 @@ namespace Data.Repositories
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            updatedCustomer.Id = _customers[index].Id;
             _customers[index] =  updatedCustomer;
         }
     }
