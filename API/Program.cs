@@ -1,6 +1,5 @@
 using AppServices.Validators;
 using DomainModels;
-using DomainServices.Interfaces;
 using DomainServices.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;

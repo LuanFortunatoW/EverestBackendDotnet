@@ -1,10 +1,7 @@
 ﻿using DomainModels;
 using DomainServices.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System;
-using DomainServices.Interfaces;
 
 namespace API.Controllers
 {
