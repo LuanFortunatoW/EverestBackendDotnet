@@ -6,10 +6,11 @@ using System.Linq;
 
 namespace DomainServices.Services
 {
-    public class CustomerService : ICustomerService
+    public class CustomerService : BaseService<Customer>
     {
         private readonly List<Customer> _customers = new();
 
+        override
         public void Create(Customer createdCustomer)
         {
             bool emailAlreadyExists = _customers.Any(customer => customer.Email == createdCustomer.Email);
@@ -20,38 +21,13 @@ namespace DomainServices.Services
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            createdCustomer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1;
-
-            _customers.Add(createdCustomer);
+            base.Create(createdCustomer);
         }
 
-        public bool Delete(long id)
-        {
-            Customer customer = GetById(id);
-
-            return _customers.Remove(customer);
-        }
-
-        public List<Customer> GetAll()
-        {
-            return _customers;
-        }
-
-        public Customer GetById(long id)
-        {
-            var result = _customers.FirstOrDefault(customer => customer.Id == id);
-
-            if (result is null)
-                throw new ArgumentException($"Customer with id {id} not found");
-
-            return result;
-        }
-
+        override
         public bool Update(Customer updatedCustomer)
-
         {
             bool emailAlreadyExists = _customers.Any(customer => customer.Email == updatedCustomer.Email && customer.Id != updatedCustomer.Id);
-
             if (emailAlreadyExists)
                 throw new ArgumentException("Email already exists");
 
@@ -59,13 +35,7 @@ namespace DomainServices.Services
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            int index = _customers.FindIndex(customer => customer.Id == updatedCustomer.Id);
-            if (index == -1)
-                return false;
-
-            updatedCustomer.Id = _customers[index].Id;
-            _customers[index] = updatedCustomer;
-            return true;
+            return base.Update(updatedCustomer);
         }
     }
 }
