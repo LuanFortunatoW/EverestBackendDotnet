@@ -67,7 +67,7 @@ namespace API.Controllers
             try
             {
                 _customerService.Delete(id);
-                return Ok("Customer deleted");
+                return NoContent();
             }
             catch (ArgumentException exception)
             {

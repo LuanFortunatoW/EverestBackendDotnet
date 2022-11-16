@@ -1,7 +1,7 @@
 ﻿namespace Data.Entities
 {
-    public abstract class BaseEntity
+    public interface BaseEntity
     {
-        public int Id { get; set; }
+        int Id { get; set; }
     }
 }

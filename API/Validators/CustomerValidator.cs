@@ -22,7 +22,7 @@ namespace Data.Validators
 
             RuleFor(customer => customer.Cpf)
                 .NotEmpty()
-                .Must(BeValidCpf)
+                .Must(isValidCpf)
                 .WithMessage("Cpf is not valid.");
 
             RuleFor(customer => customer.Cellphone)
@@ -34,7 +34,7 @@ namespace Data.Validators
                 .WithMessage("Date of birth is not valid.");
 
             RuleFor(customer => customer.DateOfBirth.AddYears(18))
-                .LessThan(DateTime.Now.Date)
+                .LessThan(DateTime.Now)
                 .WithMessage("Age must be over 18.");
 
             RuleFor(customer => customer.EmailSms)
@@ -60,7 +60,7 @@ namespace Data.Validators
                 .NotEmpty();
         }
 
-        public bool BeValidCpf(string cpf)
+        public bool isValidCpf(string cpf)
         {
             if (cpf.Length != 11)
                 return false;
