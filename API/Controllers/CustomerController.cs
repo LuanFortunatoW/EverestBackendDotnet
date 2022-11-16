@@ -84,10 +84,15 @@ namespace API.Controllers
                 _customerService.Update(customer);
                 return Ok("Customer updated");
             }
-            catch (ArgumentException exception)
+            catch (ArgumentNullException exception)
             {
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return NotFound(message);
+            }
+            catch (ArgumentException exception)
+            {
+                var message = exception.InnerException?.Message ?? exception.Message;
+                return BadRequest(message);
             }
         }
     }

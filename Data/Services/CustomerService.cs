@@ -40,7 +40,7 @@ namespace Data.Repositories
         {
             var result = _customers.FirstOrDefault(customer => customer.Id == id);
             if (result is null)
-                throw new ArgumentException($"Customer with id {id} not found");
+                throw new ArgumentNullException($"Customer with id {id} not found");
 
             return result;
         }
@@ -48,9 +48,8 @@ namespace Data.Repositories
         public void Update(Customer updatedCustomer)
         {
             var index = _customers.FindIndex(customer => customer.Id == updatedCustomer.Id);
-
             if (index == -1)
-                throw new ArgumentException($"Customer with id {updatedCustomer.Id} not found");
+                throw new ArgumentNullException($"Customer with id {updatedCustomer.Id} not found");
 
             var emailAlreadyExists = _customers.Any(customer => customer.Email == updatedCustomer.Email && customer.Id != updatedCustomer.Id);
             if (emailAlreadyExists)
@@ -60,7 +59,7 @@ namespace Data.Repositories
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            _customers[index] =  updatedCustomer;
+            _customers[index] = updatedCustomer;
         }
     }
 }
