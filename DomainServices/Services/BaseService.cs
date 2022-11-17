@@ -17,14 +17,14 @@ namespace DomainServices.Services
             _models.Add(model);
         }
 
-        public virtual bool Delete(long id)
+        public virtual void Delete(long id)
         {
             T model = GetById(id);
 
-            return _models.Remove(model);
+            _models.Remove(model);
         }
 
-        public virtual List<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return _models;
         }
@@ -32,23 +32,19 @@ namespace DomainServices.Services
         public virtual T GetById(long id)
         {
             var result = _models.FirstOrDefault(model => model.Id == id);
-
             if (result is null)
-                throw new ArgumentException($"Id {id} not found");
+                throw new ArgumentNullException($"Id {id} not found");
 
             return result;
         }
 
-        public virtual bool Update(T model)
+        public virtual void Update(T model)
         {
             int index = _models.FindIndex(_model => _model.Id == model.Id);
             if (index == -1)
-                return false;
+                throw new ArgumentNullException($"Id {model.Id} not found");
 
-            model.Id = _models[index].Id;
             _models[index] = model;
-
-            return true;
         }
     }
 }

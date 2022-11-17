@@ -1,7 +1,7 @@
 ﻿namespace DomainModels
 {
-    public abstract class BaseModel
+    public interface BaseModel
     {
-        public int Id { get; set; }
+        int Id { get; set; }
     }
 }

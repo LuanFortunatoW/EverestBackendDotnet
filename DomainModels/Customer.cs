@@ -23,18 +23,18 @@ namespace DomainModels
             FullName = fullName;
             Email = email;
             EmailConfirmation = emailConfirmation;
-            Cpf = formatCpf(cpf);
-            Cellphone = cellphone;
+            Cpf = cpf.formatCpf();
+            Cellphone = cellphone.formatCellphone();
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
             Whatsapp = whatsapp;
             Country = country;
             City = city;
-            PostalCode = postalCode;
+            PostalCode = postalCode.formatPostalCode();
             Address = address;
             Number = number;
         }
-
+        public int Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string EmailConfirmation { get; set; }
@@ -48,10 +48,5 @@ namespace DomainModels
         public string PostalCode { get; set; }
         public string Address { get; set; }
         public int Number { get; set; }
-
-        public string formatCpf(string cpf)
-        {
-            return cpf.Trim().Replace(".", "").Replace(",", "").Replace("-", "");
-        }
     }
 }

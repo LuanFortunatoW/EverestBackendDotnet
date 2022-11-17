@@ -24,7 +24,7 @@ namespace DomainServices.Services
         }
 
         override
-        public bool Update(Customer updatedCustomer)
+        public void Update(Customer updatedCustomer)
         {
             bool emailAlreadyExists = _customers.Any(customer => customer.Email == updatedCustomer.Email && customer.Id != updatedCustomer.Id);
             if (emailAlreadyExists)
@@ -34,7 +34,7 @@ namespace DomainServices.Services
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            return base.Update(updatedCustomer);
+            base.Update(updatedCustomer);
         }
     }
 }

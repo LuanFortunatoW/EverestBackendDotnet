@@ -44,6 +44,11 @@ namespace API.Controllers
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return NotFound(message);
             }
+            catch (ArgumentException exception)
+            {
+                var message = exception.InnerException?.Message ?? exception.Message;
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -84,10 +89,14 @@ namespace API.Controllers
                 var result = _service.Update(model);
                 return result ? Ok() : NotFound();
             }
-            catch (ArgumentException exception)
+            catch (ArgumentNullException exception)
             {
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return NotFound(message);
+            }
+            catch (ArgumentException exception)
+            {
+                return BadRequest();
             }
         }
     }

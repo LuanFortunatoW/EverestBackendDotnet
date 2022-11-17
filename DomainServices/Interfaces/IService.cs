@@ -6,9 +6,9 @@ namespace DomainServices.Interfaces
     internal interface IService<T> where T : BaseModel
     {
         void Create(T model);
-        bool Update(T model);
-        bool Delete(long id);
-        List<T> GetAll();
+        void Update(T model);
+        void Delete(long id);
+        IEnumerable<T> GetAll();
         T GetById(long id);
     }
 }
