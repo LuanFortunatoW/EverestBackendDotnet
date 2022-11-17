@@ -1,5 +1,5 @@
 ﻿using DomainModels;
-using DomainServices.Services;
+using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -7,7 +7,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController<S, T> : ControllerBase where S : BaseService<T> where T : BaseModel
+    public class BaseController<S, T> : ControllerBase where S : IService<T> where T : BaseModel
     {
         private readonly S _service;
 
@@ -24,10 +24,9 @@ namespace API.Controllers
                 var result = _service.GetAll();
                 return Ok(result);
             }
-            catch (ArgumentException exception)
+            catch 
             {
-                var message = exception.InnerException?.Message ?? exception.Message;
-                return BadRequest(message);
+                return NotFound();
             }
         }
 
@@ -44,11 +43,6 @@ namespace API.Controllers
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return NotFound(message);
             }
-            catch (ArgumentException exception)
-            {
-                var message = exception.InnerException?.Message ?? exception.Message;
-                return BadRequest();
-            }
         }
 
         [HttpPost]
@@ -57,7 +51,7 @@ namespace API.Controllers
             try
             {
                 _service.Create(model);
-                return Created("", model.Id);
+                return Created("Id: ", model.Id);
             }
             catch (ArgumentException exception)
             {
@@ -87,7 +81,7 @@ namespace API.Controllers
             try
             {
                 _service.Update(model);
-                return Ok("Customer updated");
+                return Ok();
             }
             catch (ArgumentNullException exception)
             {

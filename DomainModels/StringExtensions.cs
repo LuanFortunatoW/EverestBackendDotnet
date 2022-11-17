@@ -6,11 +6,11 @@
         {
             return cpf.Trim().Replace(".", "").Replace(",", "").Replace("-", "");
         }
-        internal static string formatPostalCode(this string cpf)
+        public static string formatPostalCode(this string cpf)
         {
             return cpf.Trim().Replace("-", "");
         }
-        internal static string formatCellphone(this string cpf)
+        public static string formatCellphone(this string cpf)
         {
             return cpf.Trim().Replace("+", "").Replace("-", "").Replace("(", "").Replace(")", "");
         }

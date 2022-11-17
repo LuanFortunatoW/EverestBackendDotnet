@@ -3,6 +3,7 @@ using DomainServices.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace DomainServices.Services
 {
@@ -31,16 +32,15 @@ namespace DomainServices.Services
 
         public virtual T GetById(long id)
         {
-            var result = _models.FirstOrDefault(model => model.Id == id);
-            if (result is null)
-                throw new ArgumentNullException($"Id {id} not found");
+            var result = _models.FirstOrDefault(model => model.Id == id)
+                ?? throw new ArgumentNullException($"Id {id} not found");
 
             return result;
         }
 
         public virtual void Update(T model)
         {
-            int index = _models.FindIndex(_model => _model.Id == model.Id);
+            var index = _models.FindIndex(_model => _model.Id == model.Id);
             if (index == -1)
                 throw new ArgumentNullException($"Id {model.Id} not found");
 

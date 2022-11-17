@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 using System;
+using System.Linq;
 
 namespace AppServices.Validators
 {
@@ -63,6 +64,9 @@ namespace AppServices.Validators
         public bool isValidCpf(string cpf)
         {
             if (cpf.Length != 11)
+                return false;
+
+            if (cpf.All(x => x == cpf.First()))
                 return false;
 
             int[] multiplier1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };

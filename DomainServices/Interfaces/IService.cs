@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DomainServices.Interfaces
 {
-    internal interface IService<T> where T : BaseModel
+    public interface IService<T> where T : BaseModel
     {
         void Create(T model);
         void Update(T model);
