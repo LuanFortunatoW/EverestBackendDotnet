@@ -26,7 +26,7 @@ namespace API.Controllers
             }
             catch 
             {
-                return NotFound();
+                return NoContent();
             }
         }
 
