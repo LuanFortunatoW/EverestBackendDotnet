@@ -33,7 +33,7 @@ namespace DomainServices.Services
         public virtual T GetById(long id)
         {
             var result = _models.FirstOrDefault(model => model.Id == id)
-                ?? throw new ArgumentNullException($"Id {id} not found");
+                ?? throw new ArgumentNullException($"Id: {id} not found");
 
             return result;
         }
