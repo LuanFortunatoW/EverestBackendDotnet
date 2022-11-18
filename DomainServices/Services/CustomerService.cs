@@ -6,49 +6,52 @@ using System.Linq;
 
 namespace DomainServices.Services
 {
-    public class CustomerService : BaseService<Customer>, ICustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly List<Customer> _customers = new();
 
-        override
-        public void Create(Customer createdCustomer)
+        public virtual void Create(Customer customer)
         {
-            var emailAlreadyExists = _customers.Any(customer => customer.Email == createdCustomer.Email);
+            var emailAlreadyExists = _customers.Any(_customer => _customer.Email == customer.Email);
             if (emailAlreadyExists)
                 throw new ArgumentException("Email already exists");
 
-            var cpfAlreadyExists = _customers.Any(customer => customer.Cpf == createdCustomer.Cpf);
+            var cpfAlreadyExists = _customers.Any(_customer => _customer.Cpf == customer.Cpf);
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            base.Create(createdCustomer);
+            customer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1;
+
+            _customers.Add(customer);
         }
 
-        override
-        public void Update(Customer customer)
+        public virtual void Delete(long id)
         {
-            var emailAlreadyExists = _customers.Any(_customer => _customer.Email == customer.Email && _customer.Id != customer.Id);
-            if (emailAlreadyExists)
-                throw new ArgumentException("Email already exists");
+            Customer customer = GetById(id);
 
-            var cpfAlreadyExists = _customers.Any(_customer => _customer.Cpf == customer.Cpf && _customer.Id != customer.Id);
-            if (cpfAlreadyExists)
-                throw new ArgumentException("Cpf already exists");
+            _customers.Remove(customer);
+        }
 
+        public virtual IEnumerable<Customer> GetAll()
+        {
+            return _customers;
+        }
+
+        public virtual Customer GetById(long id)
+        {
+            var result = _customers.FirstOrDefault(_customer => _customer.Id == id)
+                ?? throw new ArgumentNullException($"Customer Id: {id} not found");
+
+            return result;
+        }
+
+        public virtual void Update(Customer customer)
+        {
             var index = _customers.FindIndex(_customer => _customer.Id == customer.Id);
             if (index == -1)
                 throw new ArgumentNullException($"Customer Id: {customer.Id} not found");
 
             _customers[index] = customer;
-        }
-
-        override
-        public Customer GetById(long id)
-        {
-            var result = _customers.FirstOrDefault(customer => customer.Id == id)
-                ?? throw new ArgumentNullException($"Customer Id: {id} not found");
-
-            return result;
         }
     }
 }

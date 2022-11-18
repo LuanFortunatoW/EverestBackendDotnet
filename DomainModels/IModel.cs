@@ -1,6 +1,6 @@
 ﻿namespace DomainModels
 {
-    public interface BaseModel
+    public interface IModel
     {
         int Id { get; set; }
     }

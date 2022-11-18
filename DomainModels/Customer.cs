@@ -2,7 +2,7 @@
 
 namespace DomainModels
 {
-    public class Customer : BaseModel
+    public class Customer : IModel
     {
         public Customer(
             string fullName,
