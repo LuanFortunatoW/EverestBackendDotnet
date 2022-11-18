@@ -1,11 +1,12 @@
-﻿using DomainModels;
+﻿using AppServices.Interfaces;
+using DomainModels;
 using DomainServices.Interfaces;
 using System;
 using System.Collections.Generic;
 
 namespace AppServices.Services
 {
-    public class CustomerAppService 
+    public class CustomerAppService : ICustomerAppService
     {
         private readonly ICustomerService _service;
         public CustomerAppService(ICustomerService service)
