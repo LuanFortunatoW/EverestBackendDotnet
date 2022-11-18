@@ -3,7 +3,7 @@ using DomainServices.Interfaces;
 
 namespace AppServices.Interfaces
 {
-    internal interface ICustomerAppService : IAppService<ICustomerService, Customer>
+    public interface ICustomerAppService : IAppService<ICustomerService, Customer>
     {
     }
 }

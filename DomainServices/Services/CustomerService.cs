@@ -25,17 +25,30 @@ namespace DomainServices.Services
         }
 
         override
-        public void Update(Customer updatedCustomer)
+        public void Update(Customer customer)
         {
-            var emailAlreadyExists = _customers.Any(customer => customer.Email == updatedCustomer.Email && customer.Id != updatedCustomer.Id);
+            var emailAlreadyExists = _customers.Any(_customer => _customer.Email == customer.Email && _customer.Id != customer.Id);
             if (emailAlreadyExists)
                 throw new ArgumentException("Email already exists");
 
-            var cpfAlreadyExists = _customers.Any(customer => customer.Cpf == updatedCustomer.Cpf && customer.Id != updatedCustomer.Id);
+            var cpfAlreadyExists = _customers.Any(_customer => _customer.Cpf == customer.Cpf && _customer.Id != customer.Id);
             if (cpfAlreadyExists)
                 throw new ArgumentException("Cpf already exists");
 
-            base.Update(updatedCustomer);
+            var index = _customers.FindIndex(_customer => _customer.Id == customer.Id);
+            if (index == -1)
+                throw new ArgumentNullException($"Customer Id: {customer.Id} not found");
+
+            _customers[index] = customer;
+        }
+
+        override
+        public Customer GetById(long id)
+        {
+            var result = _customers.FirstOrDefault(customer => customer.Id == id)
+                ?? throw new ArgumentNullException($"Customer Id: {id} not found");
+
+            return result;
         }
     }
 }

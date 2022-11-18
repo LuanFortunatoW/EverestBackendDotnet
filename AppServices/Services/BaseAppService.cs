@@ -15,27 +15,27 @@ namespace AppServices.Services
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        public void Create(T model)
+        public virtual void Create(T model)
         {
             _service.Create(model);
         }
 
-        public void Delete(long id)
+        public virtual void Delete(long id)
         {
             _service.Delete(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return _service.GetAll();
         }
 
-        public T GetById(long id)
+        public virtual T GetById(long id)
         {
             return _service.GetById(id);
         }
 
-        public void Update(T model)
+        public virtual void Update(T model)
         {
             _service.Update(model);
         }

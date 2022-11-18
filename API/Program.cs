@@ -7,6 +7,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AppServices.Interfaces;
+using AppServices.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
+builder.Services.AddSingleton<ICustomerAppService, CustomerAppService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<Customer>, CustomerValidator>();
 

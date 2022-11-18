@@ -4,7 +4,7 @@ using DomainServices.Interfaces;
 
 namespace AppServices.Services
 {
-    internal class CustomerAppService : BaseAppService<ICustomerService, Customer>, ICustomerAppService
+    public class CustomerAppService : BaseAppService<ICustomerService, Customer>, ICustomerAppService
     {
         public CustomerAppService(ICustomerService service) : base(service)
         {
