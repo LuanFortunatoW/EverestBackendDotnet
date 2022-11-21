@@ -7,5 +7,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Infrastructure.CrossCuting\Infrastructure.CrossCuting.csproj" />
 	</ItemGroup>
-	
+
 </Project>

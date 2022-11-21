@@ -1,4 +1,6 @@
-﻿using AppServices.Interfaces;
+﻿using AppModels.Customers;
+using AppServices.Interfaces;
+using AutoMapper;
 using DomainModels;
 using DomainServices.Interfaces;
 using System;
@@ -9,34 +11,38 @@ namespace AppServices.Services
     public class CustomerAppService : ICustomerAppService
     {
         private readonly ICustomerService _service;
-        public CustomerAppService(ICustomerService service)
+        private readonly IMapper _mapper;
+        public CustomerAppService(ICustomerService service, IMapper mapper)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public virtual void Create(Customer customer)
+        public void Create(CustomerCreate customer)
         {
-            _service.Create(customer);
+            Customer _mappedCustomer = _mapper.Map<Customer>(customer);
+            _service.Create(_mappedCustomer);
         }
 
-        public virtual void Delete(long id)
+        public void Delete(long id)
         {
             _service.Delete(id);
         }
 
-        public virtual IEnumerable<Customer> GetAll()
+        public IEnumerable<Customer> GetAll()
         {
             return _service.GetAll();
         }
 
-        public virtual Customer GetById(long id)
+        public Customer GetById(long id)
         {
             return _service.GetById(id);
         }
 
-        public virtual void Update(Customer customer)
+        public void Update(CustomerUpdate customer)
         {
-            _service.Update(customer);
+            Customer _mappedCustomer = _mapper.Map<Customer>(customer);
+            _service.Update(_mappedCustomer);
         }
     }
 }

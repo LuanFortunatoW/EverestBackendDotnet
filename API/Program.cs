@@ -9,23 +9,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AppServices.Interfaces;
 using AppServices.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
-builder.Services.AddSingleton<ICustomerAppService, CustomerAppService>();
+builder.Services.AddTransient<ICustomerAppService, CustomerAppService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<Customer>, CustomerValidator>();
+builder.Services.AddAutoMapper(Assembly.Load(nameof(AppServices)));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -1,4 +1,4 @@
-﻿namespace DomainModels
+﻿namespace Infrastructure.CrossCuting.Extensions
 {
     public static class StringExtensions
     {

@@ -1,5 +1,5 @@
-﻿using AppServices.Interfaces;
-using DomainModels;
+﻿using AppModels.Customers;
+using AppServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public virtual IActionResult Get()
+        public IActionResult Get()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual IActionResult GetById(long id)
+        public IActionResult GetById(long id)
         {
             try
             {
@@ -46,12 +46,12 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public virtual IActionResult Create(Customer customer)
+        public IActionResult Create(CustomerCreate customer)
         {
             try
             {
                 _appService.Create(customer);
-                return Created("Id: ", customer.Id);
+                return Created("Customer: ", customer);
             }
             catch (ArgumentException exception)
             {
@@ -61,7 +61,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        public virtual IActionResult Delete(long id)
+        public IActionResult Delete(long id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public virtual IActionResult Update(Customer customer)
+        public IActionResult Update(CustomerUpdate customer)
         {
             try
             {
