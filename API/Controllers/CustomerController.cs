@@ -60,7 +60,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public virtual IActionResult Delete(long id)
         {
             try
