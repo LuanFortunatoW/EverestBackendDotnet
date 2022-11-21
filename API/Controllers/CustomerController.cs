@@ -1,5 +1,5 @@
-﻿using Data.Entities;
-using Data.Interfaces;
+﻿using AppServices.Interfaces;
+using DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -9,11 +9,11 @@ namespace API.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly ICustomerAppService _appService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerAppService appService)
         {
-            _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
+            _appService = appService ?? throw new ArgumentNullException(nameof(appService));
         }
 
         [HttpGet]
@@ -21,13 +21,12 @@ namespace API.Controllers
         {
             try
             {
-                var result = _customerService.GetAll();
+                var result = _appService.GetAll();
                 return Ok(result);
             }
-            catch (ArgumentException exception)
+            catch
             {
-                var message = exception.InnerException?.Message ?? exception.Message;
-                return BadRequest(message);
+                return NoContent();
             }
         }
 
@@ -36,10 +35,10 @@ namespace API.Controllers
         {
             try
             {
-                var result = _customerService.GetById(id);
+                var result = _appService.GetById(id);
                 return Ok(result);
             }
-            catch (ArgumentException exception)
+            catch (ArgumentNullException exception)
             {
                 var message = exception.InnerException?.Message ?? exception.Message;
                 return NotFound(message);
@@ -51,8 +50,8 @@ namespace API.Controllers
         {
             try
             {
-                _customerService.Create(customer);
-                return Created("", customer.Id);
+                _appService.Create(customer);
+                return Created("Id: ", customer.Id);
             }
             catch (ArgumentException exception)
             {
@@ -61,12 +60,12 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
             try
             {
-                _customerService.Delete(id);
+                _appService.Delete(id);
                 return NoContent();
             }
             catch (ArgumentException exception)
@@ -77,12 +76,12 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public virtual IActionResult Update(Customer customer)
+        public IActionResult Update(Customer customer)
         {
             try
             {
-                _customerService.Update(customer);
-                return Ok("Customer updated");
+                _appService.Update(customer);
+                return Ok();
             }
             catch (ArgumentNullException exception)
             {

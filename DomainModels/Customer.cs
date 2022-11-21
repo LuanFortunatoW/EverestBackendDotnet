@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Data.Entities
+namespace DomainModels
 {
-    public class Customer : BaseEntity
+    public class Customer : IModel
     {
         public Customer(
             string fullName,
@@ -50,4 +50,3 @@ namespace Data.Entities
         public int Number { get; set; }
     }
 }
-

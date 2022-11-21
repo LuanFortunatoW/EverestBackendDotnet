@@ -1,11 +1,12 @@
-﻿using Data.Entities;
+﻿using DomainModels;
 using FluentValidation;
 using FluentValidation.Validators;
 using System;
+using System.Linq;
 
-namespace Data.Validators
+namespace AppServices.Validators
 {
-    internal class CustomerValidator : AbstractValidator<Customer>
+    public class CustomerValidator : AbstractValidator<Customer>
     {
         public CustomerValidator()
         {
@@ -63,6 +64,9 @@ namespace Data.Validators
         public bool isValidCpf(string cpf)
         {
             if (cpf.Length != 11)
+                return false;
+
+            if (cpf.All(x => x == cpf.First()))
                 return false;
 
             int[] multiplier1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };

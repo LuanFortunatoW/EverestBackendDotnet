@@ -1,9 +1,9 @@
-﻿using Data.Entities;
+﻿using DomainModels;
 using System.Collections.Generic;
 
-namespace Data.Interfaces
+namespace AppServices.Interfaces
 {
-    public interface ICustomerService
+    public interface ICustomerAppService 
     {
         void Create(Customer customer);
         void Update(Customer customer);
