@@ -43,9 +43,10 @@ namespace AppServices.Services
             return mappedCustomer;
         }
 
-        public void Update(CustomerUpdate customer)
+        public void Update(long id, CustomerUpdate customer)
         {
             Customer _mappedCustomer = _mapper.Map<Customer>(customer);
+            _mappedCustomer.Id = id;
             _service.Update(_mappedCustomer);
         }
     }
