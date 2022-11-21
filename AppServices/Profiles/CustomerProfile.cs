@@ -10,6 +10,7 @@ namespace AppServices.Profiles
         {
             CreateMap<CustomerCreate, Customer>();
             CreateMap<CustomerUpdate, Customer>();
+            CreateMap<Customer, CustomerResult>();
         }
     }
 }

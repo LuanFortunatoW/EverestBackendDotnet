@@ -1,11 +1,11 @@
 ﻿using Infrastructure.CrossCuting.Extensions;
 using System;
 
-namespace DomainModels
+namespace AppModels.Customers
 {
-    public class Customer : IModel
+    public class CustomerResult
     {
-        public Customer(
+        public CustomerResult(
             string fullName,
             string email,
             string emailConfirmation,
@@ -35,6 +35,7 @@ namespace DomainModels
             Address = address;
             Number = number;
         }
+
         public long Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
