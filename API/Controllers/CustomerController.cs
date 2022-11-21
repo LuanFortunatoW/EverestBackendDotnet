@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public virtual IActionResult Get()
+        public IActionResult Get()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual IActionResult GetById(long id)
+        public IActionResult GetById(long id)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public virtual IActionResult Create(Customer customer)
+        public IActionResult Create(Customer customer)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual IActionResult Delete(long id)
+        public IActionResult Delete(long id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public virtual IActionResult Update(Customer customer)
+        public IActionResult Update(Customer customer)
         {
             try
             {

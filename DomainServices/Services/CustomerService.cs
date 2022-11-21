@@ -10,7 +10,7 @@ namespace DomainServices.Services
     {
         private readonly List<Customer> _customers = new();
 
-        public virtual void Create(Customer customer)
+        public void Create(Customer customer)
         {
             var emailAlreadyExists = _customers.Any(_customer => _customer.Email == customer.Email);
             if (emailAlreadyExists)
@@ -25,19 +25,19 @@ namespace DomainServices.Services
             _customers.Add(customer);
         }
 
-        public virtual void Delete(long id)
+        public void Delete(long id)
         {
             Customer customer = GetById(id);
 
             _customers.Remove(customer);
         }
 
-        public virtual IEnumerable<Customer> GetAll()
+        public IEnumerable<Customer> GetAll()
         {
             return _customers;
         }
 
-        public virtual Customer GetById(long id)
+        public Customer GetById(long id)
         {
             var result = _customers.FirstOrDefault(_customer => _customer.Id == id)
                 ?? throw new ArgumentNullException($"Customer Id: {id} not found");
@@ -45,7 +45,7 @@ namespace DomainServices.Services
             return result;
         }
 
-        public virtual void Update(Customer customer)
+        public void Update(Customer customer)
         {
             var index = _customers.FindIndex(_customer => _customer.Id == customer.Id);
             if (index == -1)
