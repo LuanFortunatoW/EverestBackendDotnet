@@ -48,6 +48,5 @@ namespace DomainModels
         public string PostalCode { get; set; }
         public string Address { get; set; }
         public int Number { get; set; }
-        long IModel.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
