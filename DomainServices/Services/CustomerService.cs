@@ -12,12 +12,10 @@ namespace DomainServices.Services
 
         public void Create(Customer customer)
         {
-            var emailAlreadyExists = _customers.Any(_customer => _customer.Email == customer.Email);
-            if (emailAlreadyExists)
+            if (_customers.Any(_customer => _customer.Email == customer.Email))
                 throw new ArgumentException("Email already exists");
 
-            var cpfAlreadyExists = _customers.Any(_customer => _customer.Cpf == customer.Cpf);
-            if (cpfAlreadyExists)
+            if (_customers.Any(_customer => _customer.Cpf == customer.Cpf))
                 throw new ArgumentException("Cpf already exists");
 
             customer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1;
