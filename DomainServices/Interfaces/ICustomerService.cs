@@ -5,7 +5,7 @@ namespace DomainServices.Interfaces
 {
     public interface ICustomerService
     {
-        void Create(Customer model);
+        long Create(Customer model);
         void Update(Customer model);
         void Delete(long id);
         IEnumerable<Customer> GetAll();

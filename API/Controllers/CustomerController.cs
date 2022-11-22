@@ -50,8 +50,8 @@ namespace API.Controllers
         {
             try
             {
-                _appService.Create(customer);
-                return Created("Customer: ", customer);
+                var id = _appService.Create(customer);
+                return Created("Id: ", id);
             }
             catch (ArgumentException exception)
             {

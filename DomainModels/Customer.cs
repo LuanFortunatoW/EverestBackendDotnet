@@ -1,5 +1,4 @@
-﻿using Infrastructure.CrossCuting.Extensions;
-using System;
+﻿using System;
 
 namespace DomainModels
 {
@@ -8,7 +7,6 @@ namespace DomainModels
         public Customer(
             string fullName,
             string email,
-            string emailConfirmation,
             string cpf,
             string cellphone,
             DateTime dateOfBirth,
@@ -23,22 +21,20 @@ namespace DomainModels
         {
             FullName = fullName;
             Email = email;
-            EmailConfirmation = emailConfirmation;
-            Cpf = cpf.formatCpf();
-            Cellphone = cellphone.formatCellphone();
+            Cpf = cpf;
+            Cellphone = cellphone;
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
             Whatsapp = whatsapp;
             Country = country;
             City = city;
-            PostalCode = postalCode.formatPostalCode();
+            PostalCode = postalCode;
             Address = address;
             Number = number;
         }
         public long Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public string EmailConfirmation { get; set; }
         public string Cpf { get; set; }
         public string Cellphone { get; set; }
         public DateTime DateOfBirth { get; set; }

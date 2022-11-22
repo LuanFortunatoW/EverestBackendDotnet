@@ -6,9 +6,9 @@ namespace AppModels.Customers
     public class CustomerResult
     {
         public CustomerResult(
+            long id,
             string fullName,
             string email,
-            string emailConfirmation,
             string cpf,
             string cellphone,
             DateTime dateOfBirth,
@@ -21,9 +21,9 @@ namespace AppModels.Customers
             int number
         )
         {
+            Id = id;
             FullName = fullName;
             Email = email;
-            EmailConfirmation = emailConfirmation;
             Cpf = cpf.formatCpf();
             Cellphone = cellphone.formatCellphone();
             DateOfBirth = dateOfBirth;
@@ -39,7 +39,6 @@ namespace AppModels.Customers
         public long Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public string EmailConfirmation { get; set; }
         public string Cpf { get; set; }
         public string Cellphone { get; set; }
         public DateTime DateOfBirth { get; set; }
