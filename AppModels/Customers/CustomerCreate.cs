@@ -1,5 +1,4 @@
-﻿using Infrastructure.CrossCuting.Extensions;
-using System;
+﻿using System;
 
 namespace AppModels.Customers
 {
@@ -24,14 +23,14 @@ namespace AppModels.Customers
             FullName = fullName;
             Email = email;
             EmailConfirmation = emailConfirmation;
-            Cpf = cpf.formatCpf();
-            Cellphone = cellphone.formatCellphone();
+            Cpf = cpf;
+            Cellphone = cellphone;
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
             Whatsapp = whatsapp;
             Country = country;
             City = city;
-            PostalCode = postalCode.formatPostalCode();
+            PostalCode = postalCode;
             Address = address;
             Number = number;
         }

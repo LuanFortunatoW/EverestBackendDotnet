@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastructure.CrossCuting.Extensions;
+using System;
 
 namespace DomainModels
 {
@@ -21,14 +22,14 @@ namespace DomainModels
         {
             FullName = fullName;
             Email = email;
-            Cpf = cpf;
-            Cellphone = cellphone;
+            Cpf = cpf.formatCpf();
+            Cellphone = cellphone.formatCellphone();
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
             Whatsapp = whatsapp;
             Country = country;
             City = city;
-            PostalCode = postalCode;
+            PostalCode = postalCode.formatPostalCode();
             Address = address;
             Number = number;
         }
