@@ -1,7 +1,6 @@
 ﻿using AppModels.Customers;
 using FluentValidation;
 using FluentValidation.Validators;
-using Infrastructure.CrossCuting.Extensions;
 using System;
 
 namespace AppServices.Validators

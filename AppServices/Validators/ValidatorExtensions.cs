@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Infrastructure.CrossCuting.Extensions
+namespace AppServices.Validators
 {
     public static class ValidatorExtensions
     {
