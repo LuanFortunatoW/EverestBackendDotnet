@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 using System;
+using static AppServices.Validators.StringValidator;
 
 namespace AppServices.Validators
 {
@@ -22,7 +23,7 @@ namespace AppServices.Validators
 
             RuleFor(customer => customer.Cpf)
                 .NotEmpty()
-                .Must(ValidatorExtensions.isValidCpf)
+                .Must(IsValidCpf)
                 .WithMessage("Cpf is not valid.");
 
             RuleFor(customer => customer.Cellphone)

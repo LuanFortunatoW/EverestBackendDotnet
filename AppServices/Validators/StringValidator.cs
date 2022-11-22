@@ -2,9 +2,9 @@
 
 namespace AppServices.Validators
 {
-    public static class ValidatorExtensions
+    public class StringValidator
     {
-        public static bool isValidCpf(string cpf)
+        public static bool IsValidCpf(string cpf)
         {
             if (cpf.Length != 11)
                 return false;
