@@ -1,11 +1,12 @@
 ﻿using Infrastructure.CrossCuting.Extensions;
 using System;
 
-namespace DomainModels
+namespace AppModels.Customers
 {
-    public class Customer : IModel
+    public class CustomerResult
     {
-        public Customer(
+        public CustomerResult(
+            long id,
             string fullName,
             string email,
             string cpf,
@@ -20,19 +21,21 @@ namespace DomainModels
             int number
         )
         {
+            Id = id;
             FullName = fullName;
             Email = email;
-            Cpf = cpf.formatCpf();
-            Cellphone = cellphone.formatCellphone();
+            Cpf = cpf;
+            Cellphone = cellphone;
             DateOfBirth = dateOfBirth;
             EmailSms = emailSms;
             Whatsapp = whatsapp;
             Country = country;
             City = city;
-            PostalCode = postalCode.formatPostalCode();
+            PostalCode = postalCode;
             Address = address;
             Number = number;
         }
+
         public long Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }

@@ -1,5 +1,5 @@
-﻿using AppServices.Interfaces;
-using DomainModels;
+﻿using AppModels.Customers;
+using AppServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -46,12 +46,12 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Customer customer)
+        public IActionResult Create(CustomerCreate customer)
         {
             try
             {
-                _appService.Create(customer);
-                return Created("Id: ", customer.Id);
+                var id = _appService.Create(customer);
+                return Created("Id: ", id);
             }
             catch (ArgumentException exception)
             {
@@ -75,12 +75,12 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult Update(Customer customer)
+        [HttpPut("{id}")]
+        public IActionResult Update(long id, [FromBody] CustomerUpdate customer)
         {
             try
             {
-                _appService.Update(customer);
+                _appService.Update(id, customer);
                 return Ok();
             }
             catch (ArgumentNullException exception)

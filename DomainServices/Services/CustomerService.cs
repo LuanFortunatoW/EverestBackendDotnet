@@ -10,7 +10,7 @@ namespace DomainServices.Services
     {
         private readonly List<Customer> _customers = new();
 
-        public void Create(Customer customer)
+        public long Create(Customer customer)
         {
             if (_customers.Any(_customer => _customer.Email == customer.Email))
                 throw new ArgumentException("Email already exists");
@@ -21,6 +21,8 @@ namespace DomainServices.Services
             customer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1;
 
             _customers.Add(customer);
+
+            return customer.Id;
         }
 
         public void Delete(long id)

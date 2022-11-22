@@ -1,4 +1,4 @@
-﻿namespace DomainModels
+﻿namespace Infrastructure.CrossCuting.Extensions
 {
     public static class StringExtensions
     {
@@ -8,11 +8,11 @@
         }
         public static string formatPostalCode(this string postalCode)
         {
-            return postalCode.Trim().Replace("-", "");
+            return postalCode.Trim().Replace("-", "").Replace(".", "").Replace(",", "").Replace(" ", "");
         }
         public static string formatCellphone(this string cellphone)
         {
-            return cellphone.Trim().Replace("+", "").Replace("-", "").Replace("(", "").Replace(")", "");
+            return cellphone.Trim().Replace("+", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace(",", "").Replace(".", "");
         }
     }
 }
