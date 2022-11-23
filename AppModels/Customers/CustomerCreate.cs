@@ -1,5 +1,4 @@
-﻿using Infrastructure.CrossCuting.Extensions;
-using System;
+﻿using System;
 
 namespace AppModels.Customers
 {

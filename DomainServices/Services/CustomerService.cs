@@ -1,5 +1,7 @@
 ﻿using DomainModels;
 using DomainServices.Interfaces;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,38 +10,45 @@ namespace DomainServices.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly List<Customer> _customers = new();
+        private readonly EverestDBContext _dBContext;
+
+        public CustomerService(EverestDBContext dBContext)
+        {
+            _dBContext = dBContext ?? throw new ArgumentNullException(nameof(dBContext));
+        }
 
         public long Create(Customer customer)
         {
-            if (_customers.Any(_customer => _customer.Email == customer.Email))
+            if (_dBContext.Set<Customer>().Any(_customer => _customer.Email == customer.Email))
                 throw new ArgumentException("Email already exists");
 
-            if (_customers.Any(_customer => _customer.Cpf == customer.Cpf))
+            if (_dBContext.Set<Customer>().Any(_customer => _customer.Cpf == customer.Cpf))
                 throw new ArgumentException("Cpf already exists");
 
-            customer.Id = _customers.LastOrDefault()?.Id + 1 ?? 1;
+            //customer.Id = _dBContext.Set<Customer>().LastOrDefault()?.Id + 1 ?? 1;
 
-            _customers.Add(customer);
+            _dBContext.Set<Customer>().Add(customer);
+            _dBContext.SaveChanges();
 
             return customer.Id;
         }
 
         public void Delete(long id)
         {
-            Customer customer = GetById(id);
+            var customer = GetById(id);
 
-            _customers.Remove(customer);
+            _dBContext.Entry(customer).State = EntityState.Deleted;
+            _dBContext.SaveChanges();
         }
 
         public IEnumerable<Customer> GetAll()
         {
-            return _customers;
+            return _dBContext.Set<Customer>().ToList();
         }
 
         public Customer GetById(long id)
         {
-            var result = _customers.FirstOrDefault(_customer => _customer.Id == id)
+            var result = _dBContext.Set<Customer>().FirstOrDefault(_customer => _customer.Id == id)
                 ?? throw new ArgumentNullException($"Customer Id: {id} not found");
 
             return result;
@@ -47,11 +56,10 @@ namespace DomainServices.Services
 
         public void Update(Customer customer)
         {
-            var index = _customers.FindIndex(_customer => _customer.Id == customer.Id);
-            if (index == -1)
-                throw new ArgumentNullException($"Customer Id: {customer.Id} not found");
+            var _customer = GetById(customer.Id);
 
-            _customers[index] = customer;
+            _dBContext.Entry(_customer).State = EntityState.Modified;
+            _dBContext.SaveChanges();
         }
     }
 }
