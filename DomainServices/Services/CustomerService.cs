@@ -19,15 +19,15 @@ namespace DomainServices.Services
 
         public long Create(Customer customer)
         {
-            if (_dBContext.Set<Customer>().Any(_customer => _customer.Email == customer.Email))
+            var _dbSet = _dBContext.Set<Customer>();
+
+            if (_dbSet.Any(_customer => _customer.Email == customer.Email))
                 throw new ArgumentException("Email already exists");
 
-            if (_dBContext.Set<Customer>().Any(_customer => _customer.Cpf == customer.Cpf))
+            if (_dbSet.Any(_customer => _customer.Cpf == customer.Cpf))
                 throw new ArgumentException("Cpf already exists");
 
-            //customer.Id = _dBContext.Set<Customer>().LastOrDefault()?.Id + 1 ?? 1;
-
-            _dBContext.Set<Customer>().Add(customer);
+            _dbSet.Add(customer);
             _dBContext.SaveChanges();
 
             return customer.Id;

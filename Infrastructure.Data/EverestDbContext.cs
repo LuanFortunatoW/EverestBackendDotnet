@@ -9,7 +9,7 @@ namespace Infrastructure.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Infrastructure.Data"));
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EverestDBContext).Assembly);
 
         }
     }
