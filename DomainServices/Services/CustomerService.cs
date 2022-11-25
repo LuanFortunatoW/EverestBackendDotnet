@@ -72,14 +72,14 @@ namespace DomainServices.Services
             _unitOfWork.SaveChanges();
         }
 
-        private void emailAlreadyExists(String email, long id)
+        private void emailAlreadyExists(string email, long id)
         {
             var repository = _repositoryFactory.Repository<Customer>();
             
             if (repository.Any(_customer => _customer.Email == email && _customer.Id != id))
                 throw new ArgumentException("Email already exists");
         }
-        private void cpfAlreadyExists(String cpf, long id)
+        private void cpfAlreadyExists(string cpf, long id)
         {
             var repository = _repositoryFactory.Repository<Customer>();
 
