@@ -1,6 +1,5 @@
 ﻿using AppModels.Customers;
 using AppServices.Interfaces;
-using EntityFrameworkCore.UnitOfWork.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
