@@ -22,10 +22,10 @@ namespace DomainServices.Services
             var _dbSet = _dBContext.Set<Customer>();
 
             if (_dbSet.Any(_customer => _customer.Email == customer.Email))
-                throw new ArgumentException("Email already exists");
+                throw new ArgumentException($"Email: {customer.Email} already exists");
 
             if (_dbSet.Any(_customer => _customer.Cpf == customer.Cpf))
-                throw new ArgumentException("Cpf already exists");
+                throw new ArgumentException($"Cpf: {customer.Cpf} already exists");
 
             _dbSet.Add(customer);
             _dBContext.SaveChanges();
