@@ -77,14 +77,14 @@ namespace DomainServices.Services
             var repository = _repositoryFactory.Repository<Customer>();
             
             if (repository.Any(_customer => _customer.Email == email && _customer.Id != id))
-                throw new ArgumentException("Email already exists");
+                throw new ArgumentException($"Email: {email} already exists");
         }
         private void cpfAlreadyExists(string cpf, long id)
         {
             var repository = _repositoryFactory.Repository<Customer>();
 
             if (repository.Any(_customer => _customer.Cpf == cpf && _customer.Id != id))
-                throw new ArgumentException("Cpf already exists");
+                throw new ArgumentException($"Cpf: {cpf} already exists");
         }
     }
 }
