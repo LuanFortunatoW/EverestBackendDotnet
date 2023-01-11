@@ -1,65 +1,90 @@
 ﻿using DomainModels;
 using DomainServices.Interfaces;
+using EntityFrameworkCore.UnitOfWork.Interfaces;
 using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DomainServices.Services
 {
-    public class CustomerService : ICustomerService
+    public sealed class CustomerService : ICustomerService
     {
-        private readonly EverestDBContext _dBContext;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepositoryFactory _repositoryFactory;
 
-        public CustomerService(EverestDBContext dBContext)
+        public CustomerService(IUnitOfWork<EverestDBContext> unitOfWork, IRepositoryFactory<EverestDBContext> repositoryFactory)
         {
-            _dBContext = dBContext ?? throw new ArgumentNullException(nameof(dBContext));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _repositoryFactory = repositoryFactory ?? throw new ArgumentNullException(nameof(repositoryFactory));
         }
 
         public long Create(Customer customer)
         {
-            var _dbSet = _dBContext.Set<Customer>();
+            var repository = _unitOfWork.Repository<Customer>();
 
-            if (_dbSet.Any(_customer => _customer.Email == customer.Email))
-                throw new ArgumentException($"Email: {customer.Email} already exists");
+            emailAlreadyExists(customer.Email, customer.Id);
+            cpfAlreadyExists(customer.Cpf, customer.Id);
 
-            if (_dbSet.Any(_customer => _customer.Cpf == customer.Cpf))
-                throw new ArgumentException($"Cpf: {customer.Cpf} already exists");
-
-            _dbSet.Add(customer);
-            _dBContext.SaveChanges();
+            repository.Add(customer);
+            _unitOfWork.SaveChanges();
 
             return customer.Id;
         }
 
         public void Delete(long id)
         {
+            var repository = _unitOfWork.Repository<Customer>();
             var customer = GetById(id);
 
-            _dBContext.Entry(customer).State = EntityState.Deleted;
-            _dBContext.SaveChanges();
+            repository.Remove(customer);
+            _unitOfWork.SaveChanges();
         }
 
         public IEnumerable<Customer> GetAll()
         {
-            return _dBContext.Set<Customer>().ToList();
+            var repository = _repositoryFactory.Repository<Customer>();
+            var query = repository.MultipleResultQuery();
+
+            return repository.Search(query);
         }
 
         public Customer GetById(long id)
         {
-            var result = _dBContext.Set<Customer>().FirstOrDefault(_customer => _customer.Id == id)
+            var repository = _repositoryFactory.Repository<Customer>();
+            var query = repository.SingleResultQuery()
+                                  .AndFilter(_customer => _customer.Id == id);
+            var customer = repository.SingleOrDefault(query)
                 ?? throw new ArgumentNullException($"Customer Id: {id} not found");
 
-            return result;
+            return customer;
         }
 
         public void Update(Customer customer)
         {
-            var _customer = GetById(customer.Id);
+            var repository = _unitOfWork.Repository<Customer>();
 
-            _dBContext.Entry(_customer).State = EntityState.Modified;
-            _dBContext.SaveChanges();
+            GetById(customer.Id);
+
+            emailAlreadyExists(customer.Email, customer.Id);
+            cpfAlreadyExists(customer.Cpf, customer.Id);
+
+            repository.Update(customer);
+            _unitOfWork.SaveChanges();
+        }
+
+        private void emailAlreadyExists(string email, long id)
+        {
+            var repository = _repositoryFactory.Repository<Customer>();
+            
+            if (repository.Any(_customer => _customer.Email == email && _customer.Id != id))
+                throw new ArgumentException($"Email: {email} already exists");
+        }
+        private void cpfAlreadyExists(string cpf, long id)
+        {
+            var repository = _repositoryFactory.Repository<Customer>();
+
+            if (repository.Any(_customer => _customer.Cpf == cpf && _customer.Id != id))
+                throw new ArgumentException($"Cpf: {cpf} already exists");
         }
     }
 }

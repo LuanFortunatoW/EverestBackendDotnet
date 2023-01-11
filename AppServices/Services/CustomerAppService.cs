@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace AppServices.Services
 {
-    public class CustomerAppService : ICustomerAppService
+    public sealed class CustomerAppService : ICustomerAppService
     {
         private readonly ICustomerService _service;
         private readonly IMapper _mapper;

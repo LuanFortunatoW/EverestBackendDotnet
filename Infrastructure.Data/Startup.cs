@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkCore.UnitOfWork.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Infrastructure.Data
 {
@@ -11,12 +11,14 @@ namespace Infrastructure.Data
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
-
             services.AddDbContext<EverestDBContext>(
                 dbContextOptions => dbContextOptions
-                    .UseMySql(connectionString, serverVersion)
+                    .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
             );
+
+            services.AddScoped<DbContext, EverestDBContext>();
+
+            services.AddUnitOfWork<EverestDBContext>();
 
             return services;
         }
